@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WZY 的个人名片网站 - Developer">
+    <title>WZY · 个人名片</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- 背景装饰光斑 -->
+    <div class="bg-blobs" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- 顶部导航栏 -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">WZY</a>
+            <button class="nav-toggle" id="navToggle" aria-label="菜单">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link active">首页</a></li>
+                <li><a href="#about" class="nav-link">关于我</a></li>
+                <li><a href="#contact" class="nav-link">联系我</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 首页 / Hero -->
+    <section id="home" class="hero">
+        <div class="hero-content glass-card fade-in">
+            <div class="avatar-wrap">
+                <div class="avatar-ring"></div>
+                <div class="avatar">WZY</div>
+            </div>
+            <h1 class="hero-name">WZY</h1>
+            <p class="hero-tagline">hi，这里是 Developer WZY 的个人名片网站</p>
+            <div class="hero-actions">
+                <a href="#contact" class="btn btn-primary">联系我</a>
+                <a href="#about" class="btn btn-ghost">了解更多</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于我 -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">关于我</h2>
+            <p class="section-subtitle">热爱代码，热爱创造</p>
+
+            <div class="about-grid">
+                <div class="glass-card about-text reveal">
+                    <p>你好，我是 <strong>WZY</strong>，一名对技术充满热情的开发者。喜欢探索新技术，用代码解决有趣的问题。</p>
+                    <p>这里是我的个人名片，你可以通过下方的社交平台找到我，欢迎交流与合作。</p>
+                </div>
+
+                <a href="https://stating.pages.dev" target="_blank" rel="noopener noreferrer" class="glass-card site-tile reveal">
+                    <div class="tile-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                    </div>
+                    <div class="tile-info">
+                        <h3>stating.pages.dev</h3>
+                        <p>访问我的网站</p>
+                    </div>
+                    <div class="tile-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                            <polyline points="7 7 17 7 17 17"></polyline>
+                        </svg>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我 / 社交 -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">联系我</h2>
+            <p class="section-subtitle">点击按钮复制账号，到对应平台添加好友</p>
+
+            <div class="social-grid" id="socialGrid">
+                <!-- 微信 -->
+                <button class="glass-card social-btn reveal" data-account="wzy20130309wx" data-platform="微信">
+                    <div class="social-icon" style="--brand:#07C160">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.111.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.582.582 0 0 1-.023-.156.49.49 0 0 1 .201-.398C23.024 18.48 24 16.82 24 14.98c0-3.21-3.004-5.837-6.882-6.122zm-2.036 2.84c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.97-.982zm4.844 0c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.969-.982z"/>
+                        </svg>
+                    </div>
+                    <div class="social-info">
+                        <span class="social-name">微信</span>
+                        <span class="social-account">wzy20130309wx</span>
+                    </div>
+                    <span class="social-copy">复制</span>
+                </button>
+
+                <!-- 抖音 -->
+                <button class="glass-card social-btn reveal" data-account="WZY032013" data-platform="抖音">
+                    <div class="social-icon" style="--brand:#000000">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.84-.1z"/>
+                        </svg>
+                    </div>
+                    <div class="social-info">
+                        <span class="social-name">抖音</span>
+                        <span class="social-account">WZY032013</span>
+                    </div>
+                    <span class="social-copy">复制</span>
+                </button>
+
+                <!-- 钉钉 -->
+                <button class="glass-card social-btn reveal" data-account="wzy2013e" data-platform="钉钉">
+                    <div class="social-icon" style="--brand:#1677FF">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12.002 0C5.384 0 0 5.384 0 12s5.384 12 12.002 12C18.618 24 24 18.616 24 12S18.618 0 12.002 0zm5.84 9.04c-.098.218-1.08 2.342-3.12 5.892-2.08 3.61-3.79 5.42-5.14 5.42-.87 0-1.46-.802-1.78-2.39l-.96-4.58c-.35-1.58-.73-2.37-1.13-2.37-.09 0-.39.18-.91.53l-.65-.84c.99-.87 1.97-1.75 2.91-2.63 1.32-1.24 2.31-1.9 2.95-1.97.44-.05.71.26.81.92.18 1.15.69 3.99.89 4.7.18.71.38 1.06.6 1.06.17 0 .42-.27.76-.8.5-.77 1.08-1.73 1.65-2.68.61-1.02 1.13-1.79 1.56-2.3.77-.91 1.44-1.4 2.01-1.46.43-.04.82.16 1.15.59.32.42.46.99.4 1.71z"/>
+                        </svg>
+                    </div>
+                    <div class="social-info">
+                        <span class="social-name">钉钉</span>
+                        <span class="social-account">wzy2013e</span>
+                    </div>
+                    <span class="social-copy">复制</span>
+                </button>
+
+                <!-- 快手 -->
+                <button class="glass-card social-btn reveal" data-account="5423307084" data-platform="快手">
+                    <div class="social-icon" style="--brand:#FF4906">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20.408 10.08c-.36-.12-.72-.24-1.08-.36.48-.6.84-1.32 1.08-2.04-.48.24-.96.48-1.44.6-.48-.48-1.08-.84-1.8-.84-1.32 0-2.4 1.08-2.4 2.4 0 .24 0 .36.12.6-2.04-.12-3.84-1.08-5.04-2.52v8.04c0 2.52 2.04 4.56 4.56 4.56s4.56-2.04 4.56-4.56c0-1.32-.6-2.52-1.44-3.36.36.12.84.24 1.2.36-.24-.72-.6-1.32-1.08-1.8.48.12.84.24 1.2.36-.24-.72-.6-1.32-1.08-1.8zM3.6 10.08c-.36-.12-.72-.24-1.08-.36.48-.6.84-1.32 1.08-2.04-.48.24-.96.48-1.44.6-.48-.48-1.08-.84-1.8-.84-1.32 0-2.4 1.08-2.4 2.4 0 .24 0 .36.12.6-2.04-.12-3.84-1.08-5.04-2.52v8.04c0 2.52 2.04 4.56 4.56 4.56s4.56-2.04 4.56-4.56c0-1.32-.6-2.52-1.44-3.36.36.12.84.24 1.2.36-.24-.72-.6-1.32-1.08-1.8.48.12.84.24 1.2.36-.24-.72-.6-1.32-1.08-1.8z"/>
+                        </svg>
+                    </div>
+                    <div class="social-info">
+                        <span class="social-name">快手</span>
+                        <span class="social-account">5423307084</span>
+                    </div>
+                    <span class="social-copy">复制</span>
+                </button>
+
+                <!-- 小红书 -->
+                <button class="glass-card social-btn reveal" data-account="63574381494" data-platform="小红书" data-link="https://www.xiaohongshu.com/user/profile/63574381494">
+                    <div class="social-icon" style="--brand:#FF2442">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm4.615 16.154h-1.846c-.192 0-.385-.077-.462-.23l-1.692-2.77-.923.846v1.692c0 .231-.154.462-.462.462H9.385c-.308 0-.462-.231-.462-.462V7.846c0-.23.154-.461.462-.461h1.845c.308 0 .462.23.462.461v4.154l2.385-2.385c.154-.153.308-.23.538-.23h1.846c.385 0 .539.461.308.77l-2.308 2.23 2.615 3.154c.154.231 0 .616-.308.616z"/>
+                        </svg>
+                    </div>
+                    <div class="social-info">
+                        <span class="social-name">小红书</span>
+                        <span class="social-account">63574381494</span>
+                    </div>
+                    <span class="social-copy">跳转</span>
+                </button>
+
+                <!-- 抖音精选 -->
+                <button class="glass-card social-btn reveal" data-account="WZY032013" data-platform="抖音精选">
+                    <div class="social-icon" style="--brand:#FE2C55">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z"/>
+                        </svg>
+                    </div>
+                    <div class="social-info">
+                        <span class="social-name">抖音精选</span>
+                        <span class="social-account">WZY032013</span>
+                    </div>
+                    <span class="social-copy">复制</span>
+                </button>
+
+                <!-- 元包派 -->
+                <button class="glass-card social-btn reveal" data-account="148-441-175" data-platform="元包派">
+                    <div class="social-icon" style="--brand:#7C3AED">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </div>
+                    <div class="social-info">
+                        <span class="social-name">元包派</span>
+                        <span class="social-account">148-441-175</span>
+                    </div>
+                    <span class="social-copy">复制</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>®️ 2026 WZY</p>
+            <p class="footer-sub">Made with ❤️ by WZY</p>
+        </div>
+    </footer>
+
+    <!-- Toast 提示 -->
+    <div class="toast" id="toast"></div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
