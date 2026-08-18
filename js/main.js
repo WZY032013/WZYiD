@@ -43,6 +43,10 @@
     var animId = null, lastTime = 0;
     var isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    var longPressTimer = null;
+    var longPressFired = false;
+    var activePointerId = null;
+
     /* 正交投影 */
     function proj3(pt) {
         var sp = Math.sin(pt.phi), cp = Math.cos(pt.phi);
@@ -106,9 +110,9 @@
         ctx.fillRect(0, 0, w, h);
 
         var isMobile = w < 768;
-        R = Math.min(h * 0.32, w * (isMobile ? 0.36 : 0.24));
+        R = Math.min(h * (isMobile ? 0.20 : 0.32), w * (isMobile ? 0.38 : 0.24));
         cx = isMobile ? w * 0.5 : w * 0.76;
-        cy = isMobile ? h * 0.7 : h * 0.5;
+        cy = isMobile ? h * 0.82 : h * 0.5;
 
         /* 外发光 */
         var glow = ctx.createRadialGradient(cx, cy, R * 0.85, cx, cy, R * 1.6);
@@ -203,34 +207,82 @@
     }
 
     function getPos(e) {
-        if (e.touches && e.touches[0]) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
-        if (e.changedTouches && e.changedTouches[0]) return { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
-        return { x: e.clientX, y: e.clientY };
+        if (e.touches && e.touches[0]) return { x: e.touches[0].clientX, y: e.touches[0].clientY, id: e.touches[0].identifier };
+        if (e.changedTouches && e.changedTouches[0]) return { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY, id: e.changedTouches[0].identifier };
+        return { x: e.clientX, y: e.clientY, id: null };
+    }
+
+    function isOnGlobe(px, py) {
+        var dx = px - cx, dy = py - cy;
+        return Math.sqrt(dx * dx + dy * dy) <= R * 1.3;
+    }
+
+    function clearLongPress() {
+        if (longPressTimer) {
+            clearTimeout(longPressTimer);
+            longPressTimer = null;
+        }
     }
 
     function onDown(e) {
         var p = getPos(e);
-        var dx = p.x - cx, dy = p.y - cy;
-        if (Math.sqrt(dx * dx + dy * dy) > R * 1.3) return;
-        userDragging = true;
+        if (!isOnGlobe(p.x, p.y)) return;
+
+        userDragging = false;
+        longPressFired = false;
+        activePointerId = p.id;
         lastX = p.x;
         userVelX = 0;
-        e.preventDefault();
+
+        var isTouch = e.type === 'touchstart';
+        if (isTouch) {
+            clearLongPress();
+            var canvasEl = this;
+            longPressTimer = setTimeout(function () {
+                longPressFired = true;
+                userDragging = true;
+                canvasEl.style.cursor = 'grabbing';
+            }, 280);
+        } else {
+            userDragging = true;
+            e.preventDefault();
+        }
     }
 
     function onMove(e) {
-        if (!userDragging) return;
         var p = getPos(e);
+
+        if (e.type === 'touchmove') {
+            if (activePointerId !== null && p.id !== activePointerId) return;
+
+            if (!userDragging) {
+                var dx = p.x - lastX;
+                if (Math.abs(dx) > 6) {
+                    clearLongPress();
+                }
+                lastX = p.x;
+                return;
+            }
+            e.preventDefault();
+        }
+
+        if (!userDragging) return;
         var dx = p.x - lastX;
         lastX = p.x;
         rotY += dx * 0.005;
         userVelX = dx * 0.005;
-        e.preventDefault();
     }
 
-    function onUp() {
+    function onUp(e) {
+        clearLongPress();
         userDragging = false;
-        userVelX = userVelX * 0.5;
+        activePointerId = null;
+        canvas.style.cursor = 'grab';
+        if (Math.abs(userVelX) > 0.0001) {
+            userVelX = userVelX * 0.4;
+        } else {
+            userVelX = 0;
+        }
     }
 
     var listenersBound = false;

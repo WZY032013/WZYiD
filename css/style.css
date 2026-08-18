@@ -657,21 +657,41 @@ button {
     }
 
     .hero {
-        padding-top: calc(var(--nav-height) + 24px);
-        justify-content: center;
-        text-align: center;
+        min-height: 100vh;
+        padding-top: calc(var(--nav-height) + 16px);
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 40px;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+        gap: 0;
     }
 
     .hero-content {
         text-align: center;
+        max-width: 100%;
+        margin-bottom: 32px;
     }
 
     .hero-name {
         letter-spacing: -1.5px;
+        margin-bottom: 16px;
+        font-size: clamp(2.8rem, 12vw, 4rem);
+    }
+
+    .hero-tagline {
+        margin-bottom: 24px;
+        font-size: clamp(1rem, 5vw, 1.3rem);
+    }
+
+    .hero-desc {
+        display: none;
     }
 
     .hero-actions {
         justify-content: center;
+        margin-bottom: 0;
     }
 
     .section {
@@ -694,6 +714,7 @@ button {
 @media (max-width: 420px) {
     .hero-actions {
         flex-direction: column;
+        width: 100%;
     }
 
     .btn {
@@ -702,6 +723,10 @@ button {
 
     .social-btn {
         padding: 14px 16px;
+    }
+
+    .hero-name {
+        font-size: clamp(2.2rem, 10vw, 3.5rem);
     }
 }
 
