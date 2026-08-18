@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WZY 的项目列表">
+    <title>我的项目 · WZY</title>
+    <link rel="stylesheet" href="css/style.css?v=25">
+    <style>
+        body {
+            min-height: 100vh;
+            background: var(--bg);
+            padding-top: var(--nav-height);
+        }
+
+        .projects-page {
+            padding: 80px 24px 120px;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .projects-header {
+            margin-bottom: 56px;
+        }
+
+        .projects-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        .projects-subtitle {
+            font-size: 1rem;
+            color: var(--text-tertiary);
+            line-height: 1.6;
+        }
+
+        .project-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .project-row {
+            display: grid;
+            grid-template-columns: 1.4fr 2.2fr 1fr auto;
+            gap: 24px;
+            align-items: center;
+            padding: 24px 28px;
+            background: var(--surface-strong);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .project-row:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 40px -10px var(--accent-glow);
+        }
+
+        .project-url {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--accent);
+            letter-spacing: 0.01em;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .project-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .project-date {
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 0.05em;
+        }
+
+        .project-arrow {
+            width: 32px;
+            height: 32px;
+            color: var(--text-tertiary);
+            transition: color 0.25s ease, transform 0.25s ease;
+        }
+
+        .project-row:hover .project-arrow {
+            color: var(--accent);
+            transform: translate(3px, -3px);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            padding: 10px 20px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            background: var(--surface-strong);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            transition: all 0.25s ease;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+            transform: translateX(-3px);
+        }
+
+        .back-link svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.25s ease;
+        }
+
+        .back-link:hover svg {
+            transform: translateX(-3px);
+        }
+
+        @media (max-width: 720px) {
+            .projects-page {
+                padding: 48px 16px 80px;
+            }
+            .project-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+                padding: 20px;
+            }
+            .project-desc {
+                -webkit-line-clamp: unset;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">DEVELOPER Information</a>
+            <button class="nav-toggle" id="navToggle" aria-label="菜单">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">首页</a></li>
+                <li><a href="index.html#about" class="nav-link">关于我</a></li>
+                <li><a href="index.html#contact" class="nav-link">联系我</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="projects-page">
+        <a href="index.html" class="back-link">← 返回首页</a>
+
+        <header class="projects-header">
+            <h1 class="projects-title">我的项目</h1>
+            <p class="projects-subtitle">这里记录着我开发的每一个作品</p>
+        </header>
+
+        <div class="project-list">
+            <a class="project-row" href="https://stating.pages.dev" target="_blank" rel="noopener noreferrer">
+                <span class="project-url">stating.pages.dev</span>
+                <span class="project-desc">一款非常实用的聊天软件</span>
+                <span class="project-date">2026 / 08 / 01</span>
+                <svg class="project-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                </svg>
+            </a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>®️ 2026 WZY</p>
+            <p class="footer-sub">Made with ❤️ by WZY</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js?v=24"></script>
+</body>
+</html>
