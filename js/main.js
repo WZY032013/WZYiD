@@ -112,7 +112,7 @@
         var isMobile = w < 768;
         R = Math.min(h * (isMobile ? 0.20 : 0.32), w * (isMobile ? 0.38 : 0.24));
         cx = isMobile ? w * 0.5 : w * 0.76;
-        cy = isMobile ? h * 0.72 : h * 0.5;
+        cy = isMobile ? h * 0.60 : h * 0.5;
 
         /* 外发光 */
         var glow = ctx.createRadialGradient(cx, cy, R * 0.85, cx, cy, R * 1.6);
