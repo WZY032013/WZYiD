@@ -2,10 +2,17 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="WZY 的个人名片网站 - Developer">
+    <meta name="theme-color" content="#08080c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="WZY">
+    <meta name="color-scheme" content="dark">
     <title>WZY · 个人名片</title>
-    <link rel="stylesheet" href="css/style.css?v=28">
+    <link rel="stylesheet" href="css/style.css?v=30">
+    <script src="js/geo.js?v=1" defer></script>
+    <script src="js/main.js?v=25" defer></script>
 </head>
 <body>
 
@@ -57,7 +64,7 @@
                     <p>这里是我的个人名片，你可以通过下方的社交平台找到我，欢迎交流与合作。</p>
                 </div>
 
-                <a href="projects.html" class="glass-card site-tile reveal" style="cursor:pointer">
+                <a href="projects.html" class="glass-card site-tile reveal">
                     <div class="tile-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="12" cy="12" r="10"></circle>
@@ -198,8 +205,5 @@
 
     <!-- Toast 提示 -->
     <div class="toast" id="toast"></div>
-
-    <script src="js/geo.js"></script>
-    <script src="js/main.js?v=24"></script>
 </body>
 </html>

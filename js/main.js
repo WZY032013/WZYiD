@@ -1,20 +1,19 @@
 /* ============================================
-   WZY - 旋转地球 · 真实陆地轮廓 · 绿色主题
-   使用 canvas clip() 消除闪烁线
-   修复: 透明黑块 → 用页面底色填充 canvas 背景
+   WZY - 全局交互 + 旋转地球（真实陆地轮廓 · 绿色主题）
+   DOM 代码独立于地球 Canvas，无 canvas 时仍可工作
    ============================================ */
 
 (function () {
     'use strict';
 
+    /* ======================== 地球 Canvas ======================== */
     var canvas = document.getElementById('particleCanvas');
-    if (!canvas) { return; }
-    var ctx = canvas.getContext('2d');
-    if (!ctx) { return; }
+    var ctx = canvas ? canvas.getContext('2d') : null;
+    var hasGlobe = !!(canvas && ctx);
 
     var GEO = window.GEO_POLYS || [];
 
-    /* ---- 预处理地理数据：转弧度 ---- */
+    /* 预处理地理数据：转弧度 */
     var polys = [];
     (function preprocess() {
         for (var p = 0; p < GEO.length; p++) {
@@ -44,7 +43,6 @@
     var isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     var longPressTimer = null;
-    var longPressFired = false;
     var activePointerId = null;
 
     /* 正交投影 */
@@ -100,7 +98,6 @@
         }
     }
 
-    /* ---- 绘制 ---- */
     function drawGlobe() {
         var w = window.innerWidth;
         var h = window.innerHeight;
@@ -150,7 +147,7 @@
         ctx.arc(cx, cy, R - 0.5, 0, Math.PI * 2);
         ctx.clip();
 
-        /* === 背面大陆（透明透视，极淡） === */
+        /* 背面大陆（透明透视，极淡） */
         ctx.beginPath();
         addSegs(backSegs, false);
         ctx.fillStyle = 'rgba(74, 222, 128, 0.05)';
@@ -161,13 +158,13 @@
         ctx.lineWidth = 0.7;
         ctx.stroke();
 
-        /* === 正面大陆 - 填充（弧线封口，nonzero 合并重叠） === */
+        /* 正面大陆 - 填充（弧线封口，nonzero 合并重叠） */
         ctx.beginPath();
         addSegs(frontSegs, false);
         ctx.fillStyle = 'rgba(74, 222, 128, 0.2)';
         ctx.fill();
 
-        /* === 正面大陆 - 描边（仅海岸线） === */
+        /* 正面大陆 - 描边（仅海岸线） */
         ctx.beginPath();
         addSegs(frontSegs, true);
         ctx.lineJoin = 'round';
@@ -186,7 +183,6 @@
         ctx.stroke();
     }
 
-    /* ---- 动画 ---- */
     function animate(timestamp) {
         if (!lastTime) lastTime = timestamp;
         var dt = Math.min(0.05, (timestamp - lastTime) / 1000);
@@ -229,7 +225,6 @@
         if (!isOnGlobe(p.x, p.y)) return;
 
         userDragging = false;
-        longPressFired = false;
         activePointerId = p.id;
         lastX = p.x;
         userVelX = 0;
@@ -239,7 +234,6 @@
             clearLongPress();
             var canvasEl = this;
             longPressTimer = setTimeout(function () {
-                longPressFired = true;
                 userDragging = true;
                 canvasEl.style.cursor = 'grabbing';
             }, 280);
@@ -273,7 +267,7 @@
         userVelX = dx * 0.005;
     }
 
-    function onUp(e) {
+    function onUp() {
         clearLongPress();
         userDragging = false;
         activePointerId = null;
@@ -298,7 +292,7 @@
     }
 
     function start() {
-        if (isReducedMotion) return;
+        if (!hasGlobe || isReducedMotion) return;
         resizeCanvas();
 
         if (!listenersBound) {
@@ -322,12 +316,14 @@
         if (animId) { cancelAnimationFrame(animId); animId = null; }
     }
 
-    document.addEventListener('visibilitychange', function () {
-        if (document.hidden) stop();
-        else start();
-    });
+    if (hasGlobe) {
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) stop();
+            else start();
+        });
+    }
 
-    /* ---------- DOM 交互 ---------- */
+    /* ======================== DOM 交互 ======================== */
     var navbar = document.getElementById('navbar');
     var navToggle = document.getElementById('navToggle');
     var navMenu = document.getElementById('navMenu');
@@ -338,17 +334,11 @@
     var toastTimer = null;
 
     function showToast(message) {
+        if (!toast) return;
         toast.textContent = message;
         toast.classList.add('show');
         if (toastTimer) clearTimeout(toastTimer);
         toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 2200);
-    }
-
-    function copyToClipboard(text) {
-        if (navigator.clipboard && window.isSecureContext) {
-            return navigator.clipboard.writeText(text).then(function () { return true; }).catch(function () { return fallbackCopy(text); });
-        }
-        return Promise.resolve(fallbackCopy(text));
     }
 
     function fallbackCopy(text) {
@@ -362,27 +352,57 @@
         } catch (e) { return false; }
     }
 
-    navToggle.addEventListener('click', function () { navToggle.classList.toggle('open'); navMenu.classList.toggle('open'); });
-    navLinks.forEach(function (link) { link.addEventListener('click', function () { navToggle.classList.remove('open'); navMenu.classList.remove('open'); }); });
+    function copyToClipboard(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+            return navigator.clipboard.writeText(text).then(function () { return true; }).catch(function () { return fallbackCopy(text); });
+        }
+        return Promise.resolve(fallbackCopy(text));
+    }
+
+    if (navToggle && navMenu) {
+        navToggle.addEventListener('click', function () {
+            navToggle.classList.toggle('open');
+            navMenu.classList.toggle('open');
+        });
+        navLinks.forEach(function (link) {
+            link.addEventListener('click', function () {
+                navToggle.classList.remove('open');
+                navMenu.classList.remove('open');
+            });
+        });
+    }
 
     function onScroll() {
         var sy = window.scrollY;
-        navbar.classList.toggle('scrolled', sy > 20);
 
-        var fade = Math.max(0, 1 - sy / (window.innerHeight * 0.55));
-        canvas.style.opacity = fade;
-        canvas.style.pointerEvents = fade < 0.1 ? 'none' : 'auto';
-
-        if (fade < 0.02) {
-            stop();
-        } else if (!animId && !document.hidden) {
-            lastTime = 0;
-            animId = requestAnimationFrame(animate);
+        if (navbar) {
+            navbar.classList.toggle('scrolled', sy > 20);
         }
 
-        var scrollY = sy + 100, current = '';
-        sections.forEach(function (s) { if (scrollY >= s.offsetTop && scrollY < s.offsetTop + s.offsetHeight) current = s.id; });
-        navLinks.forEach(function (l) { l.classList.toggle('active', l.getAttribute('href') === '#' + current); });
+        /* 地球淡入淡出 + 视口外停止动画 */
+        if (hasGlobe && canvas) {
+            var fade = Math.max(0, 1 - sy / (window.innerHeight * 0.55));
+            canvas.style.opacity = fade;
+            canvas.style.pointerEvents = fade < 0.1 ? 'none' : 'auto';
+
+            if (fade < 0.02) {
+                stop();
+            } else if (!animId && !document.hidden) {
+                lastTime = 0;
+                animId = requestAnimationFrame(animate);
+            }
+        }
+
+        /* 导航高亮当前 section */
+        if (sections.length && navLinks.length) {
+            var scrollY = sy + 100, current = '';
+            sections.forEach(function (s) {
+                if (scrollY >= s.offsetTop && scrollY < s.offsetTop + s.offsetHeight) current = s.id;
+            });
+            navLinks.forEach(function (l) {
+                l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+            });
+        }
     }
     window.addEventListener('scroll', onScroll, { passive: true });
 
@@ -397,7 +417,7 @@
     });
 
     var revealElements = document.querySelectorAll('.reveal');
-    if ('IntersectionObserver' in window) {
+    if (revealElements.length && 'IntersectionObserver' in window) {
         var observer = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry, index) {
                 if (entry.isIntersecting) {
