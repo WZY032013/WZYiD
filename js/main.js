@@ -12,6 +12,11 @@
     var ctx = canvas.getContext('2d');
     if (!ctx) { return; }
 
+    /* ---- 主题初始化 ---- */
+    var savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    var canvasBgColor = savedTheme === 'light' ? '#f2f4f8' : '#08080c';
+
     var GEO = window.GEO_POLYS || [];
 
     /* ---- 预处理地理数据：转弧度 ---- */
@@ -106,7 +111,7 @@
         var h = window.innerHeight;
 
         /* 用页面底色填充，阻止后面 section 透出来 */
-        ctx.fillStyle = '#08080c';
+        ctx.fillStyle = canvasBgColor;
         ctx.fillRect(0, 0, w, h);
 
         var isMobile = w < 768;
@@ -365,9 +370,25 @@
     navToggle.addEventListener('click', function () { navToggle.classList.toggle('open'); navMenu.classList.toggle('open'); });
     navLinks.forEach(function (link) { link.addEventListener('click', function () { navToggle.classList.remove('open'); navMenu.classList.remove('open'); }); });
 
+    /* 主题切换 */
+    var themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function () {
+            var current = document.documentElement.getAttribute('data-theme');
+            var next = current === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            canvasBgColor = next === 'light' ? '#f2f4f8' : '#08080c';
+        });
+    }
+
+    /* 回到顶部（锚点链接，原生滚动） */
+    var backToTop = document.getElementById('backToTop');
+
     function onScroll() {
         var sy = window.scrollY;
         navbar.classList.toggle('scrolled', sy > 20);
+        if (backToTop) backToTop.classList.toggle('show', sy > 400);
 
         var fade = Math.max(0, 1 - sy / (window.innerHeight * 0.55));
         canvas.style.opacity = fade;

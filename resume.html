@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WZY · 个人简历</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .resume-page {
+            min-height: 100vh;
+            padding: calc(var(--nav-height) + 40px) 24px 60px;
+            position: relative;
+            z-index: 10;
+        }
+        .resume-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .resume-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .resume-header h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+        .resume-header .subtitle {
+            font-size: 1.1rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .resume-header .contact-line {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .resume-section {
+            margin-bottom: 32px;
+        }
+        .resume-section h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .resume-item {
+            margin-bottom: 18px;
+        }
+        .resume-item-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 4px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .resume-item-head h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .resume-item-head .date {
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+        }
+        .resume-item .org {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+        .resume-item ul {
+            padding-left: 20px;
+        }
+        .resume-item li {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 4px;
+        }
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 10px;
+        }
+        .skill-tag {
+            background: var(--surface-strong);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            padding: 8px 14px;
+            font-size: 0.88rem;
+            color: var(--text);
+            text-align: center;
+        }
+        .print-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--nav-height);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            background: rgba(8, 8, 12, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            z-index: 100;
+        }
+        .print-bar a {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+        .print-bar a:hover { color: var(--accent); }
+        .print-btn {
+            padding: 8px 20px;
+            background: var(--accent);
+            color: #0a0a0a;
+            border: none;
+            border-radius: var(--radius-full);
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+        .print-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-accent);
+        }
+        [data-theme="light"] .print-bar {
+            background: rgba(255,255,255,0.85);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+        [data-theme="light"] .print-btn { color: #fff; }
+        @media print {
+            .print-bar { display: none; }
+            .resume-page { padding: 0; }
+            body { background: #fff; color: #000; }
+            .resume-section h2 { color: #22c55e; border-color: #ddd; }
+            .skill-tag { background: #f5f5f5; border-color: #ddd; color: #000; }
+        }
+    </style>
+</head>
+<body>
+    <div class="print-bar">
+        <a href="index.html">← 返回首页</a>
+        <button class="print-btn" onclick="window.print()">打印 / 导出 PDF</button>
+    </div>
+
+    <div class="resume-page">
+        <div class="resume-container">
+            <div class="resume-header">
+                <h1>WZY</h1>
+                <div class="subtitle">Developer · 全栈开发爱好者</div>
+                <div class="contact-line">
+                    <span>📧 邮箱：wzy@example.com</span>
+                    <span>🌐 wzy03.pages.dev</span>
+                    <span>📍 中国</span>
+                </div>
+            </div>
+
+            <div class="resume-section">
+                <h2>个人简介</h2>
+                <p style="font-size:0.92rem;color:var(--text-secondary);line-height:1.8;">
+                    对技术充满热情的开发者，热爱探索新技术，用代码解决有趣的问题。擅长前端开发与网站搭建，
+                    熟悉 HTML/CSS/JavaScript，对用户体验和视觉设计有较高追求。个人作品包括 Stating 聊天网站、
+                    个人名片站等多个项目。
+                </p>
+            </div>
+
+            <div class="resume-section">
+                <h2>专业技能</h2>
+                <div class="skills-grid">
+                    <div class="skill-tag">HTML5</div>
+                    <div class="skill-tag">CSS3</div>
+                    <div class="skill-tag">JavaScript</div>
+                    <div class="skill-tag">Python</div>
+                    <div class="skill-tag">Git / GitHub</div>
+                    <div class="skill-tag">Cloudflare</div>
+                    <div class="skill-tag">响应式设计</div>
+                    <div class="skill-tag">UI/UX 设计</div>
+                </div>
+            </div>
+
+            <div class="resume-section">
+                <h2>项目经历</h2>
+
+                <div class="resume-item">
+                    <div class="resume-item-head">
+                        <h3>Stating 聊天网站</h3>
+                        <span class="date">2026</span>
+                    </div>
+                    <div class="org">个人项目 · stating.pages.dev</div>
+                    <ul>
+                        <li>基于 Web 技术的实时聊天网站，支持群聊、已读回执等功能</li>
+                        <li>集成位置服务、用户互动模块及数据生命周期管理</li>
+                        <li>采用 iOS 液态玻璃设计风格，支持深色模式与响应式布局</li>
+                    </ul>
+                </div>
+
+                <div class="resume-item">
+                    <div class="resume-item-head">
+                        <h3>个人名片网站</h3>
+                        <span class="date">2026</span>
+                    </div>
+                    <div class="org">个人项目 · wzy03.pages.dev</div>
+                    <ul>
+                        <li>纯前端个人名片/在线简历页面，零框架依赖</li>
+                        <li>3D 旋转地球背景、深浅主题切换、访客统计等功能</li>
+                        <li>部署于 Cloudflare Pages，支持多端自适应</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="resume-section">
+                <h2>教育背景</h2>
+                <div class="resume-item">
+                    <div class="resume-item-head">
+                        <h3>在校学生</h3>
+                        <span class="date">在读</span>
+                    </div>
+                    <div class="org">计算机相关方向 · 自学编程与开发</div>
+                    <ul>
+                        <li>持续学习前端开发、网络编程与系统运维知识</li>
+                        <li>通过实际项目积累全栈开发经验</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="resume-section">
+                <h2>联系方式</h2>
+                <p style="font-size:0.92rem;color:var(--text-secondary);line-height:2;">
+                    微信：wzy20130309wx &nbsp;|&nbsp; 抖音：WZY032013 &nbsp;|&nbsp; 钉钉：wzy2013e<br>
+                    个人网站：wzy03.pages.dev &nbsp;|&nbsp; 作品站：stating.pages.dev
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 同步首页主题
+        var saved = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', saved);
+    </script>
+</body>
+</html>

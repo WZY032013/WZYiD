@@ -88,7 +88,7 @@ button {
     width: 100vw;
     height: 100vh;
     z-index: 5;
-    pointer-events: auto;
+    pointer-events: none;
     background: transparent;
     cursor: grab;
     transition: opacity 0.3s ease-out;
@@ -743,5 +743,275 @@ button {
 
     #particleCanvas {
         display: none;
+    }
+}
+
+/* ============================================
+   新增功能样式
+   ============================================ */
+
+/* ---------- 浅色主题 ---------- */
+:root {
+    --canvas-bg: #08080c;
+}
+
+[data-theme="light"] {
+    --bg: #f2f4f8;
+    --bg-elevated: #ffffff;
+    --surface: rgba(255, 255, 255, 0.6);
+    --surface-strong: rgba(255, 255, 255, 0.7);
+    --text: #1d1d1f;
+    --text-secondary: #6e6e73;
+    --text-tertiary: #aeaeb2;
+    --accent: #22c55e;
+    --accent-dark: #16a34a;
+    --accent-glow: rgba(34, 197, 94, 0.25);
+
+    --glass-bg: rgba(255, 255, 255, 0.55);
+    --glass-border: rgba(255, 255, 255, 0.8);
+    --glass-border-hover: rgba(34, 197, 94, 0.3);
+
+    --shadow-card: 0 8px 32px rgba(31, 38, 135, 0.08);
+    --shadow-hover: 0 16px 48px rgba(34, 197, 94, 0.12);
+    --shadow-accent: 0 8px 24px var(--accent-glow);
+
+    --canvas-bg: #f2f4f8;
+}
+
+[data-theme="light"] .navbar {
+    background: rgba(242, 244, 248, 0.6);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .navbar.scrolled {
+    background: rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .nav-link.active {
+    color: #ffffff;
+}
+
+[data-theme="light"] .nav-link:hover {
+    background: rgba(34, 197, 94, 0.08);
+}
+
+[data-theme="light"] .hero-name {
+    color: #1d1d1f;
+}
+
+[data-theme="light"] .btn-primary {
+    color: #ffffff;
+}
+
+[data-theme="light"] .btn-secondary {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: var(--text);
+}
+
+[data-theme="light"] .btn-secondary:hover {
+    background: rgba(34, 197, 94, 0.08);
+    border-color: var(--accent);
+}
+
+[data-theme="light"] .social-icon {
+    background: color-mix(in srgb, var(--brand) 12%, white);
+}
+
+[data-theme="light"] .social-copy {
+    background: rgba(34, 197, 94, 0.1);
+}
+
+[data-theme="light"] .toast {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    color: var(--text);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .nav-menu {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* ---------- 主题切换按钮 ---------- */
+.theme-toggle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all var(--transition);
+    margin-left: 8px;
+    flex-shrink: 0;
+}
+
+[data-theme="light"] .theme-toggle {
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.theme-toggle:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    transform: rotate(15deg);
+}
+
+.theme-toggle svg {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.theme-toggle .icon-sun {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.5);
+}
+
+.theme-toggle .icon-moon {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+}
+
+[data-theme="light"] .theme-toggle .icon-sun {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+}
+
+[data-theme="light"] .theme-toggle .icon-moon {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.5);
+}
+
+/* ---------- 回到顶部按钮 ---------- */
+.back-to-top {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--surface-strong);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-card);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+    pointer-events: none;
+    transition: all var(--transition);
+    cursor: pointer;
+}
+
+.back-to-top.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.back-to-top:hover {
+    background: var(--accent);
+    color: #ffffff;
+    border-color: var(--accent);
+    box-shadow: var(--shadow-accent);
+    transform: translateY(-3px) scale(1.05);
+}
+
+.back-to-top svg {
+    width: 22px;
+    height: 22px;
+}
+
+/* ---------- 页脚新布局 ---------- */
+.footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.footer-qr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-qr img {
+    width: 88px;
+    height: 88px;
+    border-radius: var(--radius-sm);
+    background: #ffffff;
+    padding: 6px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.footer-qr span {
+    font-size: 0.78rem;
+    color: var(--text-tertiary);
+}
+
+.footer-info {
+    text-align: left;
+}
+
+.footer-info p {
+    margin: 0;
+}
+
+.footer-visit {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    margin-top: 6px !important;
+}
+
+.footer-visit span {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* ---------- 响应式补充 ---------- */
+@media (max-width: 768px) {
+    .theme-toggle {
+        width: 36px;
+        height: 36px;
+        margin-left: 4px;
+    }
+
+    .theme-toggle svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .back-to-top {
+        bottom: 20px;
+        right: 20px;
+        width: 42px;
+        height: 42px;
+    }
+
+    .footer-content {
+        gap: 24px;
+        flex-direction: column-reverse;
+    }
+
+    .footer-info {
+        text-align: center;
     }
 }
