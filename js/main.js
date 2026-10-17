@@ -413,6 +413,10 @@
             if (link) { window.open(link, '_blank', 'noopener,noreferrer'); return; }
             copyToClipboard(account).then(function (ok) {
                 showToast(ok ? '已复制' + platform + '号：' + account : '复制失败');
+                // 通知动效层（loading.js）：复制已有真实结果，派发事件而非让动效层定时猜测
+                document.dispatchEvent(new CustomEvent('card:copy', {
+                    detail: { ok: !!ok, account: account, platform: platform }
+                }));
             });
         });
     });
