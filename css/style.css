@@ -1015,3 +1015,26 @@ button {
         text-align: center;
     }
 }
+
+/* ---------- 内联 SVG 图标（替换 emoji） ---------- */
+.ico {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+    flex-shrink: 0;
+}
+.ico-heart {
+    color: #f43f5e;
+    animation: heartbeat 1.6s ease-in-out infinite;
+}
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.15); }
+    50% { transform: scale(1); }
+    75% { transform: scale(1.1); }
+}
+.ico-mail, .ico-globe, .ico-pin {
+    color: var(--accent);
+    margin-right: 0.3em;
+}

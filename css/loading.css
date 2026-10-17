@@ -1,0 +1,351 @@
+/* ============================================
+   loading.css —— WZY 个人名片 · 高级加载动效
+   启动页（Splash + 真实进度）/ 顶部进度条 / 复制乐观 UI
+   沿用既有绿色强调色与玻璃质感；无外部资源。
+   ============================================ */
+
+:root {
+    --lp-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --lp-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    --lp-dur-micro: 120ms;
+    --lp-dur-ui: 200ms;
+    --lp-dur-page: 280ms;
+}
+
+/* ============ 启动页 Splash ============ */
+#lpSplash {
+    --p: 0;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    background:
+        radial-gradient(90% 70% at 50% 20%, rgba(74, 222, 128, 0.10) 0%, transparent 62%),
+        var(--bg, #08080c);
+    opacity: 1;
+    will-change: transform, opacity;
+    /* 退出 240ms，快于入场 280ms */
+    transition: opacity 240ms var(--lp-ease-out), transform 240ms var(--lp-ease-out);
+}
+
+#lpSplash.lp-gone {
+    opacity: 0;
+    transform: scale(0.96);
+    pointer-events: none;
+}
+
+/* 品牌标记：旋转地球轨迹 + 呼吸光圈 */
+.lp-mark {
+    position: relative;
+    width: 84px;
+    height: 84px;
+    display: grid;
+    place-items: center;
+}
+
+.lp-mark > svg {
+    width: 44px;
+    height: 44px;
+    color: var(--accent, #4ade80);
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 0 12px var(--accent-glow, rgba(74, 222, 128, 0.35)));
+}
+
+/* 经纬线旋转（真实表示"正在装载地理数据"） */
+.lp-mark .lp-spinner {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1.5px solid transparent;
+    border-top-color: color-mix(in srgb, var(--accent, #4ade80) 65%, transparent);
+    border-right-color: color-mix(in srgb, var(--accent, #4ade80) 22%, transparent);
+    will-change: transform;
+    animation: lpOrbit 1.5s linear infinite;   /* 匀速旋转 */
+}
+
+@keyframes lpOrbit {
+    to { transform: rotate(360deg); }
+}
+
+.lp-mark::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid color-mix(in srgb, var(--accent, #4ade80) 22%, transparent);
+    will-change: transform, opacity;
+    animation: lpHalo 2.4s var(--lp-ease-out) infinite;
+}
+
+@keyframes lpHalo {
+    0%   { transform: scale(0.78); opacity: 0; }
+    35%  { opacity: 0.7; }
+    100% { transform: scale(1.28); opacity: 0; }
+}
+
+.lp-word {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    animation: lpEnter 280ms var(--lp-ease-out) both;   /* 入场 scale(0.95) → 1 */
+}
+
+@keyframes lpEnter {
+    from { opacity: 0; transform: scale(0.95); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+.lp-title {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.34em;
+    text-indent: 0.34em;
+    color: var(--text, #f0f0f5);
+}
+
+.lp-sub {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--text-secondary, #9a9aa4);
+}
+
+/* 真实进度条 */
+.lp-bar {
+    --p: 0;
+    position: relative;
+    width: min(240px, 60vw);
+    height: 3px;
+    border-radius: 3px;
+    background: color-mix(in srgb, var(--text, #f0f0f5) 10%, transparent);
+    overflow: hidden;
+}
+
+.lp-bar > i {
+    position: absolute;
+    inset: 0;
+    transform: scaleX(var(--p));
+    transform-origin: left center;
+    border-radius: 3px;
+    background: linear-gradient(90deg,
+        color-mix(in srgb, var(--accent, #4ade80) 55%, #fff),
+        var(--accent, #4ade80));
+    box-shadow: 0 0 10px var(--accent-glow, rgba(74, 222, 128, 0.35));
+    transition: transform 200ms var(--lp-ease-out);
+    will-change: transform;
+}
+
+.lp-bar::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 44px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+    animation: lpShimmer 1.5s linear infinite;
+}
+
+@keyframes lpShimmer {
+    from { transform: translateX(-54px); }
+    to { transform: translateX(260px); }
+}
+
+.lp-pct {
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-secondary, #9a9aa4);
+    letter-spacing: 0.1em;
+}
+
+.lp-stage {
+    font-size: 12px;
+    color: var(--text, #f0f0f5);
+    min-height: 16px;
+}
+
+/* ============ 顶部进度条 ============ */
+#lpTop {
+    --p: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    z-index: 9998;
+    pointer-events: none;
+    background: color-mix(in srgb, var(--text, #f0f0f5) 7%, transparent);
+    opacity: 0;
+    transition: opacity var(--lp-dur-ui) var(--lp-ease-out);
+    will-change: opacity;
+}
+
+#lpTop.lp-on { opacity: 1; }
+
+#lpTop > i {
+    display: block;
+    position: absolute;
+    inset: 0;
+    transform: scaleX(var(--p));
+    transform-origin: left center;
+    border-radius: 0 3px 3px 0;
+    background: linear-gradient(90deg,
+        color-mix(in srgb, var(--accent, #4ade80) 55%, #fff),
+        var(--accent, #4ade80));
+    box-shadow: 0 0 9px var(--accent-glow, rgba(74, 222, 128, 0.35));
+    transition: transform 180ms var(--lp-ease-out), opacity 180ms var(--lp-ease-out);
+    will-change: transform;
+}
+
+/* 头部亮点：与进度条同 duration / 同 easing */
+#lpTop > b {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 32px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #fff);
+    border-radius: 0 3px 3px 0;
+    transform: translate3d(calc(var(--p) * (100vw - 32px)), 0, 0);
+    transform-origin: left center;
+    opacity: 0.9;
+    transition: transform 180ms var(--lp-ease-out), opacity 180ms var(--lp-ease-out);
+    will-change: transform;
+}
+
+/* 收尾：冲到 100% 后淡出 */
+#lpTop.lp-done > i,
+#lpTop.lp-done > b { opacity: 0; }
+
+#lpTop.lp-done { background: transparent; }
+
+/* ============ 乐观 UI：复制回执气泡 ============
+   锚在底部而非顶部：本项目导航栏是 fixed top:0 / 高 var(--nav-height)，
+   气泡放顶部会压住"首页/关于我/联系我"。底部与既有 #toast（bottom:40px）
+   分层避让 —— 既有 toast z-index 1000，气泡 9997，本层会盖住它，
+   但 main.js 里我们已同步收起原生 toast，实际不会同时出现。 */
+#lpOptimistic {
+    position: fixed;
+    left: 50%;
+    bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+    transform: translate3d(-50%, 12px, 0) scale(0.95);
+    will-change: transform, opacity;
+    z-index: 9997;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    max-width: min(420px, 90vw);
+    padding: 9px 15px;
+    border-radius: 9999px;
+    background: var(--surface-strong, rgba(28, 28, 34, 0.75));
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.07));
+    box-shadow: var(--shadow-card, 0 8px 32px rgba(0, 0, 0, 0.45));
+    font-size: 12.5px;
+    color: var(--text, #f0f0f5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms var(--lp-ease-out), transform 200ms var(--lp-ease-out);
+}
+
+/* 气泡与图标同 easing 同 duration（成对元素规范） */
+#lpOptimistic.lp-on {
+    opacity: 1;
+    transform: translate3d(-50%, 0, 0) scale(1);
+}
+
+#lpOptimistic .lp-ico {
+    width: 15px;
+    height: 15px;
+    flex: none;
+    color: var(--accent, #4ade80);
+    transform-origin: 50% 50%;
+    will-change: transform;
+    transition: transform 200ms var(--lp-ease-out);
+}
+
+#lpOptimistic.lp-pending .lp-ico { animation: lpSpin 850ms linear infinite; }
+@keyframes lpSpin { to { transform: rotate(360deg); } }
+
+#lpOptimistic.lp-ok .lp-ico {
+    color: var(--accent, #4ade80);
+    animation: lpPop 200ms var(--lp-ease-out);
+}
+
+#lpOptimistic.lp-fail .lp-ico { color: #ef4444; }
+
+@keyframes lpPop {
+    from { transform: scale(0.6); }
+    to   { transform: scale(1); }
+}
+
+#lpOptimistic .lp-txt {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#lpOptimistic .lp-act {
+    margin-left: 2px;
+    padding: 3px 11px;
+    border-radius: 9999px;
+    border: 1px solid var(--glass-border-hover, rgba(255, 255, 255, 0.14));
+    background: transparent;
+    color: var(--accent, #4ade80);
+    font: inherit;
+    font-size: 11.5px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#lpOptimistic .lp-act:active { transform: scale(0.96); }
+
+/* ============ Hover（仅精确指针设备） ============ */
+@media (hover: hover) and (pointer: fine) {
+    #lpOptimistic:hover {
+        transform: translate3d(-50%, -2px, 0) scale(1);
+    }
+}
+
+/* ============ 减弱动态 ============
+   去 transform / 位移 / 缩放（含地球旋转这类）；
+   循环动画以负 delay 暂停在好看的帧；保留 opacity 淡入淡出。 */
+@media (prefers-reduced-motion: reduce) {
+    #lpSplash.lp-gone { transform: none; }
+
+    .lp-word {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+
+    .lp-mark .lp-spinner { animation: none; opacity: 0.6; }
+    .lp-mark::after { animation: none; opacity: 0.45; }
+    .lp-bar::after { animation: none; opacity: 0; }
+
+    #lpOptimistic,
+    #lpOptimistic.lp-on,
+    #lpOptimistic:hover {
+        transform: translate3d(-50%, 0, 0) scale(1);
+    }
+
+    #lpOptimistic.lp-ok .lp-ico { animation: none; transform: none; }
+    #lpOptimistic.lp-pending .lp-ico { animation: none; opacity: 0.7; }
+
+    .lp-bar > i,
+    #lpTop > i,
+    #lpTop > b {
+        transition-duration: 1ms !important;
+    }
+
+    #lpSplash,
+    #lpTop,
+    #lpOptimistic {
+        transition-duration: 120ms !important;
+    }
+}
