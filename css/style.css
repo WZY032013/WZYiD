@@ -10,8 +10,8 @@
     --surface: rgba(20, 20, 24, 0.6);
     --surface-strong: rgba(28, 28, 34, 0.75);
     --text: #f0f0f5;
-    --text-secondary: #9a9aa4;
-    --text-tertiary: #6b6b75;
+    --text-secondary: #a8a8b3;
+    --text-tertiary: #8a8a95;
     --accent: #4ADE80;
     --accent-dark: #22c55e;
     --accent-glow: rgba(74, 222, 128, 0.35);
@@ -22,7 +22,7 @@
 
     --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.45);
     --shadow-hover: 0 16px 48px rgba(0, 0, 0, 0.55);
-    --shadow-accent: 0 8px 24px var(--accent-glow);
+    --shadow-accent: 0 6px 20px rgba(0, 0, 0, 0.4);
 
     --radius-sm: 12px;
     --radius-md: 18px;
@@ -313,7 +313,7 @@ button {
 .btn-primary:hover {
     transform: translateY(-2px);
     background: #5eeb92;
-    box-shadow: 0 12px 32px var(--accent-glow);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5);
 }
 
 .btn-primary:active {
@@ -409,7 +409,7 @@ button {
     justify-content: center;
     color: #0a0a0a;
     flex-shrink: 0;
-    box-shadow: 0 6px 16px var(--accent-glow);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
 }
 
 .tile-icon svg {
@@ -556,7 +556,7 @@ button {
 .footer-sub {
     font-size: 0.78rem;
     margin-top: 4px;
-    opacity: 0.7;
+    opacity: 0.85;
 }
 
 /* ---------- Toast ---------- */
@@ -772,8 +772,8 @@ button {
     --glass-border-hover: rgba(34, 197, 94, 0.3);
 
     --shadow-card: 0 8px 32px rgba(31, 38, 135, 0.08);
-    --shadow-hover: 0 16px 48px rgba(34, 197, 94, 0.12);
-    --shadow-accent: 0 8px 24px var(--accent-glow);
+    --shadow-hover: 0 16px 48px rgba(31, 38, 135, 0.14);
+    --shadow-accent: 0 6px 20px rgba(31, 38, 135, 0.14);
 
     --canvas-bg: #f2f4f8;
 }

@@ -135,7 +135,7 @@
     background: linear-gradient(90deg,
         color-mix(in srgb, var(--accent, #4ade80) 55%, #fff),
         var(--accent, #4ade80));
-    box-shadow: 0 0 10px var(--accent-glow, rgba(74, 222, 128, 0.35));
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
     transition: transform 200ms var(--lp-ease-out);
     will-change: transform;
 }
@@ -196,7 +196,7 @@
     background: linear-gradient(90deg,
         color-mix(in srgb, var(--accent, #4ade80) 55%, #fff),
         var(--accent, #4ade80));
-    box-shadow: 0 0 9px var(--accent-glow, rgba(74, 222, 128, 0.35));
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
     transition: transform 180ms var(--lp-ease-out), opacity 180ms var(--lp-ease-out);
     will-change: transform;
 }
